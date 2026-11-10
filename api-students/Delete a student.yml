@@ -8,7 +8,7 @@ http:
   url: '{{puzzle}}/students/:id'
   params:
     - name: id
-      value: '11'
+      value: '10'
       type: path
   auth: inherit
 
