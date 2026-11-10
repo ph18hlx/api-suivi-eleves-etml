@@ -1,0 +1,22 @@
+info:
+  name: Update a student
+  type: http
+  seq: 1
+
+http:
+  method: PUT
+  url: '{{puzzle}}/students/1'
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Paul",
+        "firstname": "Ochon"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

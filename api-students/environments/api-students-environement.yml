@@ -1,0 +1,4 @@
+name: api-students-environement
+variables:
+  - name: puzzle
+    value: http://localhost:3333
