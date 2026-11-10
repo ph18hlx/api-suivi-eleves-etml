@@ -5,7 +5,11 @@ info:
 
 http:
   method: PUT
-  url: '{{puzzle}}/students/1'
+  url: '{{puzzle}}/students/:id'
+  params:
+    - name: id
+      value: '11'
+      type: path
   body:
     type: json
     data: |-

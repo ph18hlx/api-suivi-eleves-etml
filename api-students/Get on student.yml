@@ -5,7 +5,11 @@ info:
 
 http:
   method: GET
-  url: '{{puzzle}}/1'
+  url: '{{puzzle}}/students/:id'
+  params:
+    - name: id
+      value: ''
+      type: path
   auth: inherit
 
 settings:

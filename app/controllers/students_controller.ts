@@ -5,24 +5,27 @@ export default class StudentsController {
   /**
    * Display a list of resource
    */
-  async index({}: HttpContext) {
-    return Student.query().orderBy('name').orderBy('firstname')
+  async index({ response }: HttpContext) {
+    const students = await Student.query().orderBy('name').orderBy('firstname')
+    return response.ok(students)
   }
 
   /**
    * Ajouter d'un élève
    */
-  async store({ request }: HttpContext) {
+  async store({ request, response }: HttpContext) {
     // Récupération des données envoyées par le client
     // On utilise `request.only` pour ne récupérer que les champs nécessaires
-    const student = request.only(['name', 'firstname'])
-    return Student.create(student)
+    const student = await request.only(['name', 'firstname'])
+    Student.create(student)
+    return response.created(student)
   }
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) {
-    return Student.findOrFail(params.id)
+  async show({ params, response }: HttpContext) {
+    const student = await Student.findOrFail(params.id)
+    return response.ok(student)
   }
 
   /**
@@ -32,9 +35,9 @@ export default class StudentsController {
    * - pour une modification complète (PUT)
    * - ou une modification partielle (PATCH)
    */
-  async update({ params, request }: HttpContext) {
+  async update({ params, request, response }: HttpContext) {
     // Récupération des données
-    const data = request.only(['name', 'firstname'])
+    const data = await request.only(['name', 'firstname'])
     // Vérification de l'existence de l'élève
     const student = await Student.findOrFail(params.id)
     // Mise à jour des données de l'élève
@@ -42,14 +45,15 @@ export default class StudentsController {
     // Sauvegarde des modifications
     await student.save()
     // Retour le json de l'élève mis à jour
-    return student
+    return response.ok(student)
   }
 
   /**
    * Supprimer un élève
    */
-  async destroy({ params }: HttpContext) {
+  async destroy({ params, response }: HttpContext) {
     const student = await Student.findOrFail(params.id)
-    return student.delete()
+    student.delete()
+    return response.noContent(student)
   }
 }
