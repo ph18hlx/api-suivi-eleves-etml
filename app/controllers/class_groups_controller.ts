@@ -39,10 +39,7 @@ export default class ClassGroupsController {
    */
   async update({ params, request, response }: HttpContext) {
     const { name, teacherId } = await request.validateUsing(classGroupValidator)
-    const classGroup = await ClassGroup.query()
-      .preload('teacher')
-      .where('id', params.id)
-      .firstOrFail()
+    const classGroup = await ClassGroup.findOrFail(params.id)
     classGroup.merge({ name, teacherId })
     await classGroup.save()
     return response.ok(classGroup)
