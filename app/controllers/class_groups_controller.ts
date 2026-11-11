@@ -7,7 +7,7 @@ export default class ClassGroupsController {
    * Display a list of resource
    */
   async index({ response }: HttpContext) {
-    const classGroups = await ClassGroup.query().orderBy('name')
+    const classGroups = await ClassGroup.query().preload('teacher').orderBy('name', 'asc')
     return response.ok(classGroups)
   }
 
@@ -15,8 +15,8 @@ export default class ClassGroupsController {
    * Handle form submission for the create action
    */
   async store({ request, response }: HttpContext) {
-    const { name } = await request.validateUsing(classGroupValidator)
-    const classGroup = await ClassGroup.create({ name })
+    const { name, teacherId } = await request.validateUsing(classGroupValidator)
+    const classGroup = await ClassGroup.create({ name, teacherId })
     return response.created(classGroup)
   }
 
@@ -24,7 +24,10 @@ export default class ClassGroupsController {
    * Show individual record
    */
   async show({ params, response }: HttpContext) {
-    const classGroup = await ClassGroup.findOrFail(params.id)
+    const classGroup = await ClassGroup.query()
+      .preload('teacher')
+      .where('id', params.id)
+      .firstOrFail()
     if (!classGroup) {
       return response.notFound()
     }
@@ -35,9 +38,12 @@ export default class ClassGroupsController {
    * Handle form submission for the edit action
    */
   async update({ params, request, response }: HttpContext) {
-    const { name } = await request.validateUsing(classGroupValidator)
-    const classGroup = await ClassGroup.findOrFail(params.id)
-    classGroup.merge({ name })
+    const { name, teacherId } = await request.validateUsing(classGroupValidator)
+    const classGroup = await ClassGroup.query()
+      .preload('teacher')
+      .where('id', params.id)
+      .firstOrFail()
+    classGroup.merge({ name, teacherId })
     await classGroup.save()
     return response.ok(classGroup)
   }
