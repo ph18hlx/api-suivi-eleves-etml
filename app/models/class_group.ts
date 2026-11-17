@@ -1,9 +1,15 @@
 import { ClassGroupSchema } from '#database/schema'
-import { belongsTo } from '@adonisjs/lucid/orm'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import { belongsTo, hasMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import Teacher from '#models/teacher'
+import Student from '#models/student'
+
 export default class ClassGroup extends ClassGroupSchema {
-  // Relation : 1 classe → 1 enseignant
+  // Relation : 1 classe -> 1 enseignant
   @belongsTo(() => Teacher)
   declare teacher: BelongsTo<typeof Teacher>
+
+  // Relation : 1 classe -> N élèves
+  @hasMany(() => Student)
+  declare students: HasMany<typeof Student>
 }

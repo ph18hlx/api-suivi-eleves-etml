@@ -11,7 +11,8 @@ http:
     data: |-
       {
         "name": "Bob",
-        "firstname": "Wurwa"
+        "firstname": "Wurwa",
+        "classGroupId": 1
       }
   auth: inherit
 
