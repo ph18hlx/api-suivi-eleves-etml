@@ -1,0 +1,22 @@
+info:
+  name: Delete a comment for this student
+  type: http
+  seq: 1
+
+http:
+  method: DELETE
+  url: '{{puzzle}}/students/:id/comments/:comment_id'
+  params:
+    - name: id
+      value: '1'
+      type: path
+    - name: comment_id
+      value: '3'
+      type: path
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

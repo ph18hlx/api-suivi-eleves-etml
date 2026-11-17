@@ -125,6 +125,71 @@ export interface Registry {
       rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/students_controller').default['destroy']>>>
     }
   }
+  'students.comments.index': {
+    methods: ["GET","HEAD"]
+    pattern: '/students/:student_id/comments'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { student_id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['index']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['index']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['index']>>>
+    }
+  }
+  'students.comments.store': {
+    methods: ["POST"]
+    pattern: '/students/:student_id/comments'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { student_id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>>
+    }
+  }
+  'students.comments.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/students/:student_id/comments/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue, ParamValue]
+      params: { student_id: ParamValue; id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['show']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['show']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['show']>>>
+    }
+  }
+  'students.comments.update': {
+    methods: ["PUT","PATCH"]
+    pattern: '/students/:student_id/comments/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue, ParamValue]
+      params: { student_id: ParamValue; id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>>
+    }
+  }
+  'students.comments.destroy': {
+    methods: ["DELETE"]
+    pattern: '/students/:student_id/comments/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue, ParamValue]
+      params: { student_id: ParamValue; id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['destroy']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['destroy']>>>
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['destroy']>>>
+    }
+  }
   'teachers.index': {
     methods: ["GET","HEAD"]
     pattern: '/teachers'
@@ -192,7 +257,7 @@ export interface Registry {
   }
   'class_groups.index': {
     methods: ["GET","HEAD"]
-    pattern: '/class-groups'
+    pattern: '/classGroups'
     types: {
       body: {}
       paramsTuple: []
@@ -205,7 +270,7 @@ export interface Registry {
   }
   'class_groups.store': {
     methods: ["POST"]
-    pattern: '/class-groups'
+    pattern: '/classGroups'
     types: {
       body: ExtractBody<InferInput<(typeof import('#validators/class_group').classGroupValidator)>>
       paramsTuple: []
@@ -218,7 +283,7 @@ export interface Registry {
   }
   'class_groups.show': {
     methods: ["GET","HEAD"]
-    pattern: '/class-groups/:id'
+    pattern: '/classGroups/:id'
     types: {
       body: {}
       paramsTuple: [ParamValue]
@@ -231,7 +296,7 @@ export interface Registry {
   }
   'class_groups.update': {
     methods: ["PUT","PATCH"]
-    pattern: '/class-groups/:id'
+    pattern: '/classGroups/:id'
     types: {
       body: ExtractBody<InferInput<(typeof import('#validators/class_group').classGroupValidator)>>
       paramsTuple: [ParamValue]
@@ -244,7 +309,7 @@ export interface Registry {
   }
   'class_groups.destroy': {
     methods: ["DELETE"]
-    pattern: '/class-groups/:id'
+    pattern: '/classGroups/:id'
     types: {
       body: {}
       paramsTuple: [ParamValue]

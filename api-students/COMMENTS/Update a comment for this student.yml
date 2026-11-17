@@ -1,0 +1,25 @@
+info:
+  name: Update a comment for this student
+  type: http
+  seq: 1
+
+http:
+  method: PUT
+  url: '{{puzzle}}/students/:id/comments/:comment_id'
+  params:
+    - name: comment_id
+      value: '4'
+      type: path
+    - name: id
+      value: '1'
+      type: path
+  body:
+    type: json
+    data: '{"content": "J''ai du changer"}'
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

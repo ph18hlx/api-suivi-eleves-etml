@@ -1,0 +1,18 @@
+info:
+  name: Add a new comment for this student
+  type: http
+  seq: 1
+
+http:
+  method: POST
+  url: '{{puzzle}}/students/1/comments'
+  body:
+    type: json
+    data: '{"content": "Voilà t''es devenu nul", "teacher_id": 2}'
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
