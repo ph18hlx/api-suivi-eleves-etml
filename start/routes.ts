@@ -40,5 +40,7 @@ router.get('test', async () => {
   return 'API is working!'
 })
 
-// Routes pour le CRUD /students
+// Routes pour le CRUD /students /teachers /class-groups
 router.resource('students', controllers.Students).apiOnly()
+router.resource('teachers', controllers.Teachers).apiOnly()
+router.resource('class-groups', controllers.ClassGroups).apiOnly()

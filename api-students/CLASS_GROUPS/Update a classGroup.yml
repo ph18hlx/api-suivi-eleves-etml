@@ -1,0 +1,25 @@
+info:
+  name: Update a classGroup
+  type: http
+  seq: 1
+
+http:
+  method: PUT
+  url: '{{puzzle}}/class-groups/:id'
+  params:
+    - name: id
+      value: '6'
+      type: path
+  body:
+    type: json
+    data: |-
+      {
+        "name": "doope"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

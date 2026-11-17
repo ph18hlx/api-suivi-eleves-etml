@@ -27,6 +27,9 @@ export default class StudentsController {
    */
   async show({ params, response }: HttpContext) {
     const student = await Student.findOrFail(params.id)
+    if (!student) {
+      return response.notFound()
+    }
     return response.ok(student)
   }
 
@@ -55,7 +58,7 @@ export default class StudentsController {
    */
   async destroy({ params, response }: HttpContext) {
     const student = await Student.findOrFail(params.id)
-    student.delete()
+    await student.delete()
     return response.noContent(student)
   }
 }
