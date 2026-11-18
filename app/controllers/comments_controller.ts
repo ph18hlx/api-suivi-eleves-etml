@@ -2,6 +2,8 @@ import Comment from '#models/comment'
 import Student from '#models/student'
 import { commentValidator } from '#validators/comment'
 import type { HttpContext } from '@adonisjs/core/http'
+import CommentPolicy from '#policies/comment_policy'
+
 export default class CommentsController {
   /**
    * Afficher tous les commentaires de l'élève student_id
@@ -56,29 +58,51 @@ export default class CommentsController {
   }
   /**
    * Mettre à jour le commentaire de l'élève student_id
+   *
+   * Si un admin modifie le commentaire créé par un enseignant, nous ne modifions pas le teacherId.
    */
-  async update({ params, request, response }: HttpContext) {
+  async update({ params, request, response, bouncer }: HttpContext) {
     // Récupération des données envoyées par le client et validation des données
     const { content } = await request.validateUsing(commentValidator)
     // Vérifie que le commentaire appartient bien à l'élève
+    // et précharge l'enseignant pour la vérification des permissions
     const comment = await Comment.query()
       .where('id', params.id)
       .where('student_id', params.student_id)
+      .preload('teacher')
       .firstOrFail()
+    // Vérifie les permissions de l'utilisateur connecté
+    if (await bouncer.with(CommentPolicy).denies('update', comment)) {
+      return response.forbidden({
+        message:
+          "Vous n'êtes pas l'auteur de ce commentaire. Vous n'avez pas le droit de le modifier",
+      })
+    }
     // Mise à jour
     comment.content = content
     await comment.save()
     // Réponse 200 OK avec le commentaire mis à jour
     return response.ok(comment)
   }
+
   /**
    * Supprimer le commentaire de l'élève student_id
    */
-  async destroy({ params, response }: HttpContext) {
+  async destroy({ params, response, bouncer }: HttpContext) {
+    // Récupère le commentaire à supprimer
+    // et précharge l'enseignant pour la vérification des permissions
     const comment = await Comment.query()
       .where('id', params.id)
       .where('student_id', params.student_id)
+      .preload('teacher')
       .firstOrFail()
+    // Vérifie les permissions de l'utilisateur connecté
+    if (await bouncer.with(CommentPolicy).denies('delete', comment)) {
+      return response.forbidden({
+        message:
+          "Vous n'êtes pas l'auteur de ce commentaire. Vous n'avez pas le droit de le supprimer",
+      })
+    }
     // Suppression du commentaire
     await comment.delete()
     // On utilise `response.noContent` pour retourner un code HTTP 204 sans contenu
