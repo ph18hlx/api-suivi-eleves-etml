@@ -142,13 +142,13 @@ export interface Registry {
     methods: ["POST"]
     pattern: '/students/:student_id/comments'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/comment').commentValidator)>>
       paramsTuple: [ParamValue]
       params: { student_id: ParamValue }
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/comment').commentValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>>
-      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'students.comments.show': {
@@ -168,13 +168,13 @@ export interface Registry {
     methods: ["PUT","PATCH"]
     pattern: '/students/:student_id/comments/:id'
     types: {
-      body: {}
+      body: ExtractBody<InferInput<(typeof import('#validators/comment').commentValidator)>>
       paramsTuple: [ParamValue, ParamValue]
       params: { student_id: ParamValue; id: ParamValue }
-      query: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/comment').commentValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>>
-      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>>
-      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
+      rawResponse: ExtractRawResponse<Awaited<ReturnType<import('#controllers/comments_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
   'students.comments.destroy': {
