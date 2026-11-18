@@ -19,19 +19,26 @@ export default class CommentsController {
   /**
    * Ajouter un nouveau commentaire à l'élève student_id
    */
-  async store({ params, request, response }: HttpContext) {
+  async store({ params, request, response, auth }: HttpContext) {
     // Récupération des données envoyées par le client et validation des données
     const { content } = await request.validateUsing(commentValidator)
-    // Pour l'instant, on fixe "en dur" l'id de l'enseignant
-    // Lorsque l'on va mettre en place l'authentification,
-    // on pourra récupérer l'id de l'enseignant connecté
-    const teacherId = 1
+
+    // Récupération de l'utilisateur authentifié
+    const user = auth.getUserOrFail()
+
+    // Chargement de l'enseignant lié à cet utilisateur
+    const teacher = await user.related('teacher').query().first()
+    if (!teacher) {
+      return response.badRequest({ message: 'Teacher not found' })
+    }
+
     // Création du commentaire lié à l'élève
     const comment = await Comment.create({
       content,
       studentId: params.student_id,
-      teacherId,
+      teacherId: teacher.id,
     })
+
     return response.created(comment)
   }
   /**

@@ -2,3 +2,5 @@ name: api-students-environement
 variables:
   - name: puzzle
     value: http://localhost:3333
+  - name: token
+    value: oat_Mg.ZVdoTWR4RTFJYU5LWHg1dmUxdEx3blpfc0FQbWxoVkxaLVF6X3ZIZDIwNzgzODkxOQ
