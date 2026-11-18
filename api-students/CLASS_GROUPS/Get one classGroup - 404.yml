@@ -5,12 +5,14 @@ info:
 
 http:
   method: GET
-  url: '{{puzzle}}/class-groups/:id'
+  url: "{{puzzle}}/classGroups/:id"
   params:
     - name: id
-      value: '50'
+      value: "5"
       type: path
-  auth: inherit
+  auth:
+    type: bearer
+    token: "{{token}}"
 
 settings:
   encodeUrl: true

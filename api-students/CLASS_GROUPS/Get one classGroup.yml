@@ -5,10 +5,10 @@ info:
 
 http:
   method: GET
-  url: '{{puzzle}}/class-groups/:id'
+  url: "{{puzzle}}/classGroups/:id"
   params:
     - name: id
-      value: '1'
+      value: "1"
       type: path
   auth: inherit
 
